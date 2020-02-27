@@ -11,7 +11,8 @@
       <input [class.is-invalid]="username.invalid && username.touched " formControlName="username" type="text" class="form-control" id="username" placeholder="Enter username" name="username">      
       <div *ngIf="username.invalid && username.touched">
         <small *ngIf="username.errors?.required" class="text-danger" >UserName is required</small>
-        <small *ngIf="username.errors?.minlength" class="text-danger" >UserName must be at least 6 charachters</small>
+        <small *ngIf="username.errors?.minlength" class="text-danger" >UserName must be at least 3 charachters</small>
+        <small *ngIf="username.errors?.forbiddenName" class="text-danger" >{{username.errors?.forbiddenName.value}} UserName not allowed</small>
       </div>
     </div>
     <div class="form-group">
@@ -22,7 +23,7 @@
       <label for="confirmpwd">Confirm Password:</label>
       <input formControlName="confirmPassword" type="password" class="form-control" id="confirmpwd" placeholder="Enter password" name="confirmpwd">
     </div>
-   <div formGroupName="address">
+    <div formGroupName="address">
       <label for="address">Address:</label>
       <div class="form-group">
         <label for="city">City:</label>
