@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(private formbuilder: FormBuilder){}
   title = 'reactive-forms';
   registrationForm = this.formbuilder.group({
-  username : [''],
+  username : ['', [Validators.required, Validators.minLength(6)]],
   password: [''],
     confirmPassword: [''],
     address: this.formbuilder.group({
@@ -22,7 +22,9 @@ export class AppComponent {
     })
 
  });
-
+get username(){
+  return this.registrationForm.get('username');
+}
   /* registrationForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),

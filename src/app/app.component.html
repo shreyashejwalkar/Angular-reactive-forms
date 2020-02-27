@@ -8,7 +8,11 @@
   <form [formGroup]="registrationForm">
     <div class="form-group">
       <label for="username">Username:</label>
-      <input formControlName="username" type="text" class="form-control" id="username" placeholder="Enter username" name="username">
+      <input [class.is-invalid]="username.invalid && username.touched " formControlName="username" type="text" class="form-control" id="username" placeholder="Enter username" name="username">      
+      <div *ngIf="username.invalid && username.touched">
+        <small *ngIf="username.errors?.required" class="text-danger" >UserName is required</small>
+        <small *ngIf="username.errors?.minlength" class="text-danger" >UserName must be at least 6 charachters</small>
+      </div>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
