@@ -4,6 +4,7 @@
 
 <div class="container">
   <h2 style="text-align: center;">Registration form</h2>
+  <div class="container"> {{registrationForm.value | json}}</div>
   <form [formGroup]="registrationForm">
     <div class="form-group">
       <label for="username">Username:</label>
@@ -17,7 +18,21 @@
       <label for="confirmpwd">Confirm Password:</label>
       <input fromControlName="confirmPassword" type="password" class="form-control" id="confirmpwd" placeholder="Enter password" name="confirmpwd">
     </div>
+    <div formGroupName="address">
+      <label for="address">Address:</label>
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input fromControlName="city" type="text" class="form-control" id="city" placeholder="Enter city" name="city">
+      </div>
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input fromControlName="state" type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+      </div>
+      <div class="form-group">
+        <label for="postalcode">Postal Code:</label>
+        <input fromControlName="postalCode" type="text" class="form-control" id="postalcode" placeholder="Enter postalcode" name="postalcode">
+      </div>
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  {{registrationForm.value | json}}
 </div>
