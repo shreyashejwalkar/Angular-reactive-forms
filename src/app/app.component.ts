@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,22 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private formbuilder: FormBuilder){}
   title = 'reactive-forms';
+  registrationForm = this.formbuilder.group({
+  username : [''],
+  password: [''],
+    confirmPassword: [''],
+    address: this.formbuilder.group({
+      city:[''],
+      state: [''],
+      postalCode: ['']
+    })
 
+ });
 
-  registrationForm = new FormGroup({
+  /* registrationForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
     confirmPassword: new FormControl(''),
@@ -20,7 +33,7 @@ export class AppComponent {
       postalCode: new FormControl('')
     })
 
-  });
+  }); */
 
   loadApiData()
   {
