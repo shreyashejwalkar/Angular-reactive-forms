@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './shared/user-name.validator';
 import { PasswordValidator } from './shared/password.validator';
@@ -9,10 +9,14 @@ import { PasswordValidator } from './shared/password.validator';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
 
+export class AppComponent implements OnInit
+{
+  constructor(private formbuilder: FormBuilder){}
+  title = 'reactive-forms';
   registrationForm : FormGroup;
-  ngOnInit(){
+  ngOnInit()
+  {
     this.registrationForm = this.formbuilder.group({
       username : ['', [Validators.required, Validators.minLength(3), forbiddenNameValidator(/password/)]],
       email : [''],
@@ -23,7 +27,8 @@ export class AppComponent implements OnInit{
           city:[''],
           state: [''],
           postalCode: ['']
-        })
+        }),
+        alternateEmails : this.formbuilder.array([])
      },{validator : PasswordValidator});
 
      this.registrationForm.get('subscribe').valueChanges // get hold of subscribe element and access valuechange which return observable
@@ -43,17 +48,28 @@ export class AppComponent implements OnInit{
        email.updateValueAndValidity();
      });
   }
+ 
+  get username()
+  {
+    return this.registrationForm.get('username');
+  }
 
-  constructor(private formbuilder: FormBuilder){}
-  title = 'reactive-forms';
+  get email()
+  {
+    return this.registrationForm.get('email');
+  }
+
+  get alternateEmails()
+  {
+    return this.registrationForm.get('alternateEmails') as FormArray;
+  }
+
+  // dynamically add form control into form array
+  addAlternateEmail()
+  {
+    this.alternateEmails.push(this.formbuilder.control(''));
+  }
   
-get username(){
-  return this.registrationForm.get('username');
-}
-
-get email(){
-  return this.registrationForm.get('email');
-}
   /* registrationForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -78,6 +94,5 @@ get email(){
         postalCode: '422101'
       }
     });
-
   }
 }
