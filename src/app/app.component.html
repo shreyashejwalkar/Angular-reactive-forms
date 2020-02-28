@@ -5,7 +5,7 @@
 <div class="container">
   <h2 style="text-align: center;">Registration form</h2>
   <div class="container"> {{registrationForm.value | json}}</div>
-  <form [formGroup]="registrationForm">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <!--Custom validation-->
     <div class="form-group">
       <label for="username">Username:</label>
@@ -25,7 +25,7 @@
        <!--Iterate over from array and display input field-->
        <div formArrayName="alternateEmails" *ngFor="let email of alternateEmails.controls; let i=index">
         <!--array is dynamic so index value i to bind to from control name property-->
-        <input type="text" class="form-control my-1" placeholder="Enter alternate email" formControlName="i">
+        <input type="text" class="form-control my-1" placeholder="Enter alternate email" [formControlName]="i">
       </div>
     </div>
     <div class="form-check mb-3">
@@ -57,7 +57,7 @@
         <input formControlName="postalCode" type="text" class="form-control" id="postalcode" placeholder="Enter postalcode" name="postalcode">
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button [disabled]="!registrationForm.valid" type="submit" class="btn btn-primary">Register</button>
     <button (click)="loadApiData()" type="button" class="btn btn-secondary ml-2">Load API data</button>
   </form>
 </div>

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './shared/user-name.validator';
 import { PasswordValidator } from './shared/password.validator';
+import { RegistrationService } from './registration.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ import { PasswordValidator } from './shared/password.validator';
 
 export class AppComponent implements OnInit
 {
-  constructor(private formbuilder: FormBuilder){}
+  constructor(private formbuilder: FormBuilder, private registrationService: RegistrationService){}
   title = 'reactive-forms';
   registrationForm : FormGroup;
   ngOnInit()
@@ -69,7 +70,7 @@ export class AppComponent implements OnInit
   {
     this.alternateEmails.push(this.formbuilder.control(''));
   }
-  
+
   /* registrationForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -94,5 +95,13 @@ export class AppComponent implements OnInit
         postalCode: '422101'
       }
     });
+  }
+
+  onSubmit()
+  {
+    console.log(this.registrationForm.value);
+    // call registration service and subscribe to observable
+    this.registrationService.register(this.registrationForm.value)
+    .subscribe(response => console.log('Success', response), error => console.error('Error', error));
   }
 }
